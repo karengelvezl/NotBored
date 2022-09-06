@@ -2,4 +2,11 @@
     <string name="app_name">NotBored APP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // Suggestions screen
+    <string name="tryAnother">Try another</string>
+    <string name="price">Price</string>
+    <string name="participants">Participants</string>
+
+
 </resources>
