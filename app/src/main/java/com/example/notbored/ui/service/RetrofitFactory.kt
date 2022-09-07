@@ -1,6 +1,5 @@
 package com.example.notbored.ui.service
 
-import com.example.data.service.RealTimeDatabaseDeserializer
 import com.example.notbored.ui.service.responseObjects.SuggestionResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

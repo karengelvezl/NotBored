@@ -3,9 +3,10 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/df2a7d3f2bc106b9e963c7a1be0b5e79/transformed/savedstate-ktx-1.1.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d253b06bf0968d3fa40d900e94e2b2d2/transformed/savedstate-ktx-1.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a92bb4cf0ef14a5d9fdcbff4a5279ed8/transformed/savedstate-ktx-1.1.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a92bb4cf0ef14a5d9fdcbff4a5279ed8/transformed/savedstate-ktx-1.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a92bb4cf0ef14a5d9fdcbff4a5279ed8/transformed/savedstate-ktx-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe6510797946c4ba7e4bb5d0b286492b/transformed/savedstate-ktx-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe6510797946c4ba7e4bb5d0b286492b/transformed/savedstate-ktx-1.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/fe6510797946c4ba7e4bb5d0b286492b/transformed/savedstate-ktx-1.1.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

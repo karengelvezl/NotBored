@@ -1,13 +1,13 @@
-package com.example.data.service
+/*package com.example.notbored.ui.service
 
-import com.example.data.responseObjects.ReservationListResponse
-import com.example.data.responseObjects.ReservationResponse
+import com.example.notbored.ui.service.responseObjects.SuggestionListResponse
+import com.example.notbored.ui.service.responseObjects.SuggestionResponse
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import java.lang.reflect.Type
 
-class RealTimeDatabaseDeserializer : JsonDeserializer<ReservationListResponse> {
+class RealTimeDatabaseDeserializer : JsonDeserializer<SuggestionResponse> {
 
     companion object {
         private const val AUTHORIZATION_CODE = "authorizationCode"
@@ -16,17 +16,17 @@ class RealTimeDatabaseDeserializer : JsonDeserializer<ReservationListResponse> {
         private const val PARKING_LOT = "parkingLot"
     }
 
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): ReservationListResponse {
+    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): SuggestionListResponse {
         val eJson = json?.asJsonObject
         val keys = eJson?.keySet()
-        var reservationResponse: ReservationResponse
-        var reservationListResponse = ReservationListResponse(mutableListOf<ReservationResponse>())
+        var reservationResponse: SuggestionResponse
+        var reservationListResponse = SuggestionListResponse(mutableListOf<SuggestionResponse>())
 
         keys?.let {
             for (key in keys) {
                 try {
                     val asJsonObject = eJson.get(key).asJsonObject
-                    reservationResponse = ReservationResponse(
+                    reservationResponse = SuggestionResponse(
                         key,
                         asJsonObject.get(AUTHORIZATION_CODE).asString, asJsonObject.get(START_DATE).asString, asJsonObject.get(
                             END_DATE
@@ -41,4 +41,4 @@ class RealTimeDatabaseDeserializer : JsonDeserializer<ReservationListResponse> {
         }
         return reservationListResponse
     }
-}
+}*/
