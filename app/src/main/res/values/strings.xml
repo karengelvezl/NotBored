@@ -15,4 +15,18 @@
     <string name="numberOfParticipants">number of participants</string>
     <string name="btnStart">Start</string>
 
+    //Activities
+    <string-array name="activities">
+        <item name="education">Education</item>
+        <item name="recreational">Recreational</item>
+        <item name="social">Social</item>
+        <item name="diy">Diy</item>
+        <item name="charity">Charity</item>
+        <item name="coocking">Cooking</item>
+        <item name="relaxation">Relaxation</item>
+        <item name="music">Music</item>
+        <item name="busywork">Busywork</item>
+    </string-array>
+
+
 </resources>
