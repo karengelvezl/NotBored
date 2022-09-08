@@ -14,4 +14,5 @@ interface APIService {
 
     @GET()
     suspend fun getSuggestionByParticipants(@Url participants : Int): Response<SuggestionResponse>
+
 }
