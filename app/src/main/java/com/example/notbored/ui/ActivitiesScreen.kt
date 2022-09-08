@@ -1,10 +1,11 @@
 package com.example.notbored.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.*
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.notbored.R
 import com.example.notbored.databinding.FragmentActivitiesBinding
 
@@ -24,10 +25,16 @@ class ActivitiesScreen : Fragment() {
         return inflater.inflate(R.layout.fragment_activities, container, false)
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentActivitiesBinding.bind(view)
         val activities = resources.getStringArray(R.array.activities).toList()
         binding.lvActivities.adapter = ActivitiesAdapter(view.context, activities)
+
+        binding.shuffle.setOnClickListener {
+            Toast.makeText(view.context, "RANDOM", Toast.LENGTH_LONG).show()
+        }
 
     }
 }
