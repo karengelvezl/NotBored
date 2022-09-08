@@ -1,5 +1,6 @@
 package com.example.notbored.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,11 +19,31 @@ class ActivitiesScreen : AppCompatActivity() {
 
         val activities = resources.getStringArray(R.array.activities).toList()
         binding.lvActivities.adapter = ActivitiesAdapter(this, activities)
-
+        var numberParticipants: String = ""
         val bundle: Bundle? = intent.extras
 
-        binding.shuffle.setOnClickListener {
-            Toast.makeText(this, "RANDOM", Toast.LENGTH_LONG).show()
+        bundle?.let {
+            bundle.apply {
+                //Intent with data
+                numberParticipants = getString("numberParticipants").toString()
+            }
+        }
+
+        val intent = Intent(this, SuggestionScreen::class.java)
+        with(binding){
+            lvActivities.setOnItemClickListener { adapterView, view, i, l ->
+                val typeActivity = adapterView.getItemAtPosition(i) as String
+                //llamada a la API con el putInt y el tipo de actividad numberParticipants -> true
+                intent.putExtra("numberParticipants", numberParticipants)
+                intent.putExtra("nameActivity", typeActivity.lowercase())
+                intent.putExtra("random", false)
+                startActivity(intent)
+            }
+            shuffle.setOnClickListener {
+                //llamar al metodo random de la api -> false
+                intent.putExtra("random", true)
+                startActivity(intent)
+            }
         }
     }
 

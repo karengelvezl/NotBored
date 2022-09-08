@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
     private fun sendActivityScreen() {
         binding.btnStart.setOnClickListener {
 
-            val participants = binding.numberParticipants
-            val numberParticipants = participants.toString().toInt()
+            val participants = binding.numberParticipants.text
+            val numberParticipants = participants.toString()
             val intent = Intent(this, ActivitiesScreen::class.java).apply {
                 putExtra("numberParticipants", numberParticipants)
             }
