@@ -5,8 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundSkyBlue"
-    tools:context=".FirstFragment">
+    tools:context=".ui.TermsAndConditionsActivity">
 
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="43dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        tools:src="@drawable/ic_baseline_cancel_24" />
 
     <TextView
         android:id="@+id/textView"

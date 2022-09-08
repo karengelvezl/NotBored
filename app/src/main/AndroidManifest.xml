@@ -17,6 +17,15 @@
             android:name=".ui.ActivitiesScreen"
             android:exported="false" />
         <activity
+            android:name=".ui.SuggestionScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.TermsAndConditionsActivity"
+            android:exported="false" />
+
+
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
