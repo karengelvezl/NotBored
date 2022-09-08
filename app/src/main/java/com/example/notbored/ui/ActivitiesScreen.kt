@@ -20,9 +20,23 @@ class ActivitiesScreen : AppCompatActivity() {
         binding.lvActivities.adapter = ActivitiesAdapter(this, activities)
 
         val bundle: Bundle? = intent.extras
+        bundle?.let {
+            bundle.apply {
+                //Intent with data
+                val string: String? = getString("numberParticipants")
 
-        binding.shuffle.setOnClickListener {
-            Toast.makeText(this, "RANDOM", Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+        with(binding){
+            lvActivities.setOnItemClickListener { adapterView, view, i, l ->
+                val typeActivity = adapterView.getItemAtPosition(i) as String
+                //llamada a la API con el putInt y el tipo de actividad numberParticipants
+            }
+            shuffle.setOnClickListener {
+                //llamar al metodo random de la api
+            }
         }
     }
 }
