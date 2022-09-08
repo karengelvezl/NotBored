@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/activitiesFragment"
-        android:name="com.example.notbored.ui.ActivitiesScreen"
+        android:name="com.example.notbored.ui.ActivitiesScreenF"
         android:label="fragment_activities"
         tools:layout="@layout/fragment_activities" />
+    <activity
+        android:id="@+id/activitiesScreen"
+        android:name="com.example.notbored.ui.ActivitiesScreen"
+        android:label="ActivitiesScreen" />
 </navigation>
