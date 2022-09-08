@@ -1,8 +1,8 @@
 package com.example.notbored.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.notbored.R
 import com.example.notbored.databinding.ActivityActivitiesScreenBinding
 
@@ -39,4 +39,5 @@ class ActivitiesScreen : AppCompatActivity() {
             }
         }
     }
+
 }
