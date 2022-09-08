@@ -16,6 +16,7 @@
     <string name="btnStart">Start</string>
 
     //Activities
+    <string name="activities">Activities</string>
     <string-array name="activities">
         <item name="education">Education</item>
         <item name="recreational">Recreational</item>
