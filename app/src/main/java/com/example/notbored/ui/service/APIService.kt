@@ -8,14 +8,17 @@ interface APIService {
 
     @GET()
     suspend fun getRandom(): Response<SuggestionResponse>
-/*
-    @GET ("parkings/{parkingId}/.json")
-    suspend fun getLotList(@Path("parkingId") id: String) : Response<LotListResponse>
 
-    @DELETE("{parkingId}/reservations/{reservationId}/.json")
-    suspend fun deleteReservation(@Path("parkingId") id: String, @Path("reservationId") resId: String) : Response<Any>
+    @GET("type={type}")
+    suspend fun getSuggestionByType(@Path("type") type: String): Response<SuggestionResponse>
 
-    @POST("{parkingId}/reservations.json?=")
-    suspend fun postReservation(@Path("parkingId") id: String, @Body newReservation: ReservationRequest) : Response<Any>
-*/
+    @GET("participants={participants}")
+    suspend fun getSuggestionByParticipants(@Path("participants") participants : Int): Response<SuggestionResponse>
+
+    @GET("price={price}")
+    suspend fun getSuggestionByPrice(@Path("price") price : Int): Response<SuggestionResponse>
+
+    @GET("accessibility={accessibility}")
+    suspend fun getSuggestionByAccessibility(@Path("accessibility")accessibility:Int): Response<SuggestionResponse>
+
 }
