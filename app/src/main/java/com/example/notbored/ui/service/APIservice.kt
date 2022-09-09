@@ -7,12 +7,22 @@ import retrofit2.http.*
 interface APIService {
 
     // base call to the API
-    @GET()
-    suspend fun getSuggestion(@Url endOfUrl: String): Response<SuggestionResponse>
+    @GET("activity")
+    suspend fun getRandomSuggestion(): Response<SuggestionResponse>
 
-    @GET("activity?")
-    suspend fun getActivity(@Query("type") activity: String?, @Query("participants") participants: Int?): Response<SuggestionResponse>
-    
-    @GET("activity?")
-    suspend fun getRandomActivity(@Query("participants") participants: Int): Response<SuggestionResponse>
+    @GET("activity")
+    suspend fun getSuggestionByParticipants(
+        @Query("participants") participants: Int
+    ): Response<SuggestionResponse>
+
+    @GET("activity")
+    suspend fun getSuggestionByActivity(
+        @Query("type") activity: String
+    ): Response<SuggestionResponse>
+
+    @GET("activity")
+    suspend fun getSuggestionByActivityAndParticipants(
+        @Query("type") activity: String,
+        @Query("participants") participants: Int
+    ): Response<SuggestionResponse>
 }

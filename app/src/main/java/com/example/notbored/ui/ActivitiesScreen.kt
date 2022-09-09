@@ -10,7 +10,7 @@ import com.example.notbored.databinding.ActivityActivitiesScreenBinding
 class ActivitiesScreen : AppCompatActivity() {
 
     private lateinit var binding: ActivityActivitiesScreenBinding
-    private var numberParticipants: String? = null
+    private var numberParticipants: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +26,9 @@ class ActivitiesScreen : AppCompatActivity() {
         bundle?.let {
             bundle.apply {
                 //Intent with data
-                numberParticipants.let { getString("numberParticipants").toString()}
+                numberParticipants.let { numberParticipants = getString("numberParticipants").toString()}
             }
         }
-
         val intent2 = Intent(this, SuggestionScreenActivity::class.java)
 
         with(binding) {

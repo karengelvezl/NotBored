@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SuggestionScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySuggestionScreenBinding
+    private lateinit var apiResponse: Response<SuggestionResponse>
 
     private var random: Boolean = false
     private var nameActivity: String? = null
@@ -54,9 +55,6 @@ class SuggestionScreenActivity : AppCompatActivity() {
     private fun receiveParameters(bundle: Bundle?) {
         bundle?.let {
             bundle.apply {
-                random = false
-                nameActivity = null
-                numberParticipants = null
                 random = intent.getBooleanExtra("random", false)
                 nameActivity = intent.getStringExtra("nameActivity")
                 numberParticipants = intent.getStringExtra("numberParticipants")
@@ -89,16 +87,23 @@ class SuggestionScreenActivity : AppCompatActivity() {
     private fun findRandomSuggestion(numberOfParticipants: String?) {
         CoroutineScope(Dispatchers.IO).launch {
             // creation of the petition
-            var url = "activity"
+
+            /*var url = "activity"
 
             numberParticipants?.let {
                     url = "activity?participants=$numberOfParticipants"
-                }
+                }*/
 
-
-            // creation of backend instance and send of query with no parameters
-            val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                .create(APIService::class.java).getSuggestion(url)
+            if(!numberOfParticipants.isNullOrBlank()) {
+                // creation of backend instance and send of query with no parameters
+                apiResponse = getRetrofit()
+                    .create(APIService::class.java)
+                    .getSuggestionByParticipants(numberOfParticipants.toInt())
+            } else {
+                // creation of backend instance and send of query with no parameters
+                apiResponse = getRetrofit()
+                    .create(APIService::class.java).getRandomSuggestion()
+            }
 
             // get the answer of the query
             val suggestionResponse: SuggestionResponse? = apiResponse.body()
@@ -126,17 +131,18 @@ class SuggestionScreenActivity : AppCompatActivity() {
     ) {
         CoroutineScope(Dispatchers.IO).launch {
 
-
-            // creation of the petition
-            var url = "activity?type=$activity"
-            numberParticipants?.let {
-                url = "activity?type=$activity&participants=$numberOfParticipants"
-
+            if(!numberOfParticipants.isNullOrBlank()) {
+                // creation of backend instance and send of query with no parameters
+                apiResponse = getRetrofit()
+                    .create(APIService::class.java)
+                    .getSuggestionByActivityAndParticipants(activity,numberOfParticipants.toInt())
+            } else {
+                // creation of backend instance and send of query with no parameters
+                apiResponse = getRetrofit()
+                    .create(APIService::class.java)
+                    .getSuggestionByActivity(activity)
             }
 
-            // creation of backend instance and send of query with participants and activityType as parameters
-            val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                .create(APIService::class.java).getSuggestion(url)
 
             // get the answer of the query
             val suggestionResponse: SuggestionResponse? = apiResponse.body()

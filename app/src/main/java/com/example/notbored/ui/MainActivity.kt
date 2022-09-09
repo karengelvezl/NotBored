@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
             val participants = binding.numberParticipants.text
 
             if(TextUtils.isEmpty(participants)){
-
                 val intent = Intent(this, ActivitiesScreen::class.java)
                 startActivity(intent)
             } else {
