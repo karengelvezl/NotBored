@@ -4,38 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundSkyBlue"
+    android:background="@color/color_background"
     tools:context=".ui.SuggestionScreen">
 
     <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/skyBlue">
+        android:background="@color/color_application"
+        android:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="18dp"
-            tools:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-            android:background="@color/skyBlue"
-            />
 
         <TextView
             android:id="@+id/activityType1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity Type"
+            android:text="@string/activityType"
             android:textSize="25sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginEnd="40dp"
-            />
+            android:layout_gravity="center"/>
 
     </Toolbar>
 
@@ -50,7 +41,7 @@
         android:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/activityTypeImage"
@@ -59,14 +50,14 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/dollarImage"
         app:layout_constraintTop_toBottomOf="@+id/dollarImage"
-        app:srcCompat="@drawable/ic_baseline_table_rows_24" />
+        app:srcCompat="@drawable/ic_baseline_format_list_bulleted" />
 
     <TextView
         android:id="@+id/activityType2"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginHorizontal="10dp"
-        android:text="Activity Type"
+        android:text="@string/activityType"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:gravity="center"
