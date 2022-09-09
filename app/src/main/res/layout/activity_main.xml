@@ -16,7 +16,9 @@
         app:layout_constraintBottom_toTopOf="@+id/txtParticipants"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:textColor="@color/skyBlue"/>
 
     <TextView
         android:id="@+id/txtParticipants"
@@ -60,7 +62,7 @@
         android:id="@+id/btnStart"
         android:layout_width="109dp"
         android:layout_height="50dp"
-        android:backgroundTint="@color/color_application"
+        android:backgroundTint="@color/skyBlue"
         android:text="@string/btnStart"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +70,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textField"
-        app:layout_constraintVertical_bias="0.59" />
+        app:layout_constraintVertical_bias="0.59"/>
 
     <TextView
         android:id="@+id/txtTermsAndConditions"
@@ -80,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStart"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.161"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

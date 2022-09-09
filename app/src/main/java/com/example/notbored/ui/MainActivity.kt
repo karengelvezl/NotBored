@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
         sendActivityScreen()
         sendTermsAndConditions()
-
-
     }
 
     private fun sendActivityScreen() {
@@ -42,16 +40,4 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-/*
-    private fun sendTermsAndConditions() {
-        binding.txtTermsAndConditions.setOnClickListener {
-            val intent = Intent(this, TermsAndConditionsActivity::class.java).apply {
-            }
-            startActivity(intent)
-        }
-
-
-    }
-
- */
 }

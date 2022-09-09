@@ -7,12 +7,12 @@ import retrofit2.http.*
 interface APIService {
 
     @GET()
-    suspend fun getRandom(): Response<SuggestionResponse>
+    suspend fun getRandom(@Url random: String): Response<SuggestionResponse>
 
     @GET()
     suspend fun getSuggestionByType(@Url type: String): Response<SuggestionResponse>
 
     @GET()
-    suspend fun getSuggestionByParticipants(@Url participants : Int): Response<SuggestionResponse>
+    suspend fun getSuggestionByParticipants(@Url participants: String): Response<SuggestionResponse>
 
 }

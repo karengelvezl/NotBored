@@ -1,8 +1,11 @@
 package com.example.notbored.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.notbored.R
 import com.example.notbored.databinding.ActivitySuggestionScreenBinding
 import com.example.notbored.ui.service.APIService
@@ -20,7 +23,7 @@ class SuggestionScreen : AppCompatActivity() {
 
     private var random: Boolean = false
     private var nameActivity: String? = null
-    private var numberParticipants: Int? = null
+    private var numberParticipants: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,65 +38,130 @@ class SuggestionScreen : AppCompatActivity() {
                 //Intent with data
                 random = intent.getBooleanExtra("random", false)
                 nameActivity = intent.getStringExtra("nameActivity")
-                numberParticipants = intent.getIntExtra("numberParticipants", 0)
+                numberParticipants = intent.getStringExtra("numberParticipants")
+            }
+        }
+        makeRequest(random, nameActivity!!, numberParticipants.let { it } ?: "0")
+        with(binding) {
+            tryAnotherButton.setOnClickListener {
+                makeRequest(random, nameActivity!!, numberParticipants.let { it } ?: "0")
+            }
+
+            toolbar.setOnClickListener {
+                val participants = numberParticipants
+                val numberParticipants = participants.toString()
+                val intent = Intent(applicationContext, ActivitiesScreen::class.java).apply {
+                    putExtra("numberParticipants", numberParticipants)
+                }
+                startActivity(intent)
             }
         }
     }
 
-        private fun getRetrofit(): Retrofit {
-            //inicializo retrofit para luego crear una instancia
-            return Retrofit.Builder()
-                .baseUrl("http://www.boredapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+    private fun makeRequest(random: Boolean, activity: String, participants: String) {
+        when (random) {
+            false -> {
+                findSuggestion(activity, participants)
+            }
+            true -> {
+                findRandomSuggestion()
+            }
         }
+    }
 
-        private fun findRandomSuggestion() {
-            CoroutineScope(Dispatchers.IO).launch {
-                //esto crea la instancia de backend para usarlo
-                val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                    .create(APIService::class.java).getRandom()
-                //getImagesOfDogsByBreed("$query/images")
+    private fun getRetrofit(): Retrofit {
+        //inicializo retrofit para luego crear una instancia
+        return Retrofit.Builder()
+            .baseUrl("http://www.boredapi.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
-                //obtengo el cuerpo de la respuesta
-                val suggestionResponse: SuggestionResponse? = apiResponse.body()
+    private fun findRandomSuggestion() {
+        CoroutineScope(Dispatchers.IO).launch {
+            //esto crea la instancia de backend para usarlo
+            val apiResponse: Response<SuggestionResponse> = getRetrofit()
+                .create(APIService::class.java).getRandom("activity")
 
-                runOnUiThread {
-                    if (apiResponse.isSuccessful) {
-                        binding.suggestionText.text = suggestionResponse?.activity
-                        binding.activityType1.text = suggestionResponse?.type
-                        binding.activityType2.text = suggestionResponse?.type
+            //obtengo el cuerpo de la respuesta
+            val suggestionResponse: SuggestionResponse? = apiResponse.body()
+
+            runOnUiThread {
+                if (apiResponse.isSuccessful) {
+                    suggestionResponse?.let {
+                        binding.suggestionText.text = suggestionResponse.activity
+                        binding.activityType1.text = "Random"
+                        binding.activityType2.text = suggestionResponse.type.sentenceCase()
                         binding.activityTypeImage.visibility = View.VISIBLE
-                        binding.priceRangeText.text = suggestionResponse?.price.toString()
-                        binding.personAmountText.text = suggestionResponse?.participants.toString()
+                        binding.priceRangeText.text = getPrice(suggestionResponse.price)
+                        binding.personAmountText.text = suggestionResponse.participants
                     }
                 }
             }
         }
+    }
 
-        private fun findSuggestion(
-            activity: String,
-            numberOfParticipants: Int
-        ) {
-            CoroutineScope(Dispatchers.IO).launch {
-                //esto crea la instancia de backend para usarlo
-                val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                    .create(APIService::class.java).getRandom()
-                //getImagesOfDogsByBreed("$query/images")
+    private fun findSuggestion(
+        activity: String,
+        numberOfParticipants: String
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            //esto crea la instancia de backend para usar
+            var url: String = ""
+            numberParticipants?.let {
+                if (numberOfParticipants.isNotBlank()) {
+                    url = "activity?type=$activity&participants=$numberOfParticipants"
+                } else {
+                    url = "activity?type=$activity"
+                }
+            }
 
-                //obtengo el cuerpo de la respuesta
-                val suggestionResponse: SuggestionResponse? = apiResponse.body()
 
-                runOnUiThread {
-                    if (apiResponse.isSuccessful) {
-                        binding.suggestionText.text = suggestionResponse?.activity
-                        binding.activityType1.text = suggestionResponse?.type
+            val apiResponse: Response<SuggestionResponse> = getRetrofit()
+                .create(APIService::class.java).getRandom(url)
+            //getImagesOfDogsByBreed("$query/images")
+
+            //obtengo el cuerpo de la respuesta
+            val suggestionResponse: SuggestionResponse? = apiResponse.body()
+
+            runOnUiThread {
+                if (apiResponse.isSuccessful) {
+                    suggestionResponse?.activity?.let {
+                        binding.suggestionText.text = suggestionResponse.activity
+                        binding.activityType1.text = suggestionResponse.type.sentenceCase()
                         binding.activityType2.text = ""
                         binding.activityTypeImage.visibility = View.GONE
-                        binding.priceRangeText.text = suggestionResponse?.price.toString()
-                        binding.personAmountText.text = suggestionResponse?.participants.toString()
+                        binding.priceRangeText.text = getPrice(suggestionResponse.price)
+                        binding.personAmountText.text = suggestionResponse.participants
+                    } ?: run {
+                        suggestionResponse?.error?.let {
+                            Toast.makeText(
+                                applicationContext,
+                                suggestionResponse.error,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        }
+
                     }
                 }
             }
         }
+
     }
+
+    private fun getPrice(value: String): String {
+        val price = value.toDouble()
+        when {
+            price == 0.0 -> return "Free"
+            (price > 0.0 && price <= 0.3) -> return "Low"
+            (price > 0.3 && price <= 0.6) -> return "Medium"
+            else -> return "High"
+        }
+    }
+
+    private fun String.sentenceCase(): String {
+        return this.substring(0, 1).uppercase() + this.substring(1)
+    }
+
+}

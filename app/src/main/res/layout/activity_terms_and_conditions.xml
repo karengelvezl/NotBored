@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundSkyBlue"
+    android:background="@color/color_background"
     tools:context=".ui.TermsAndConditionsActivity">
 
 
@@ -12,16 +12,19 @@
         android:id="@+id/backButton"
         android:layout_width="43dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/color_background"
+        android:rotation="45"
+        android:src="@drawable/ic_baseline_add_35"
         app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        tools:src="@drawable/ic_baseline_cancel_24" />
+        app:layout_constraintEnd_toEndOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:text="@string/termsAndConditions"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -36,10 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginVertical="20dp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="@string/notBored"
         android:textColor="@color/skyBlue"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +53,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="200dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0"
-        >
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/about_text_view"
