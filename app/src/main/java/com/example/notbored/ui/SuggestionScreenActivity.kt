@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.example.notbored.R
 import com.example.notbored.databinding.ActivitySuggestionScreenBinding
 import com.example.notbored.ui.service.APIService
@@ -17,7 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SuggestionScreen : AppCompatActivity() {
+class SuggestionScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySuggestionScreenBinding
 
@@ -41,10 +40,12 @@ class SuggestionScreen : AppCompatActivity() {
                 numberParticipants = intent.getStringExtra("numberParticipants")
             }
         }
-        makeRequest(random, nameActivity?.let { it } ?: "", numberParticipants.let { it } ?: "0")
+
+        makeRequest(random, nameActivity ?: "", numberParticipants)
+
         with(binding) {
             tryAnotherButton.setOnClickListener {
-                makeRequest(random, nameActivity?.let { it } ?: "", numberParticipants.let { it } ?: "0")
+                makeRequest(random, nameActivity ?: "", numberParticipants)
             }
 
             toolbar.setOnClickListener {
@@ -58,34 +59,43 @@ class SuggestionScreen : AppCompatActivity() {
         }
     }
 
-    private fun makeRequest(random: Boolean, activity: String, participants: String) {
+    private fun makeRequest(random: Boolean, activity: String, participants: String?) {
         when (random) {
             false -> {
                 findSuggestion(activity, participants)
             }
             true -> {
-                findRandomSuggestion()
+                findRandomSuggestion(participants)
             }
         }
     }
 
     private fun getRetrofit(): Retrofit {
-        //inicializo retrofit para luego crear una instancia
+        // creation of retrofit instance
         return Retrofit.Builder()
             .baseUrl("http://www.boredapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private fun findRandomSuggestion() {
+    private fun findRandomSuggestion(numberOfParticipants: String?) {
         CoroutineScope(Dispatchers.IO).launch {
-            //esto crea la instancia de backend para usarlo
-            val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                .create(APIService::class.java).getRandom("activity")
 
-            //obtengo el cuerpo de la respuesta
+            // creation of the petition
+            var url = "activity"
+
+            numberParticipants?.let {
+                    url = "activity?participants=$numberOfParticipants"
+                }
+
+            // creation of backend instance and send of query with no parameters
+            val apiResponse: Response<SuggestionResponse> = getRetrofit()
+                .create(APIService::class.java).getSuggestion(url)
+
+            // get the answer of the query
             val suggestionResponse: SuggestionResponse? = apiResponse.body()
 
+            // print the received info
             runOnUiThread {
                 if (apiResponse.isSuccessful) {
                     suggestionResponse?.let {
@@ -103,27 +113,25 @@ class SuggestionScreen : AppCompatActivity() {
 
     private fun findSuggestion(
         activity: String,
-        numberOfParticipants: String
+        numberOfParticipants: String?
     ) {
         CoroutineScope(Dispatchers.IO).launch {
-            //esto crea la instancia de backend para usar
-            var url: String = ""
+
+            // creation of the petition
+            var url = "activity?type=$activity"
             numberParticipants?.let {
-                if (numberOfParticipants.isNotBlank()) {
-                    url = "activity?type=$activity&participants=$numberOfParticipants"
-                } else {
-                    url = "activity?type=$activity"
-                }
+                url = "activity?type=$activity&participants=$numberOfParticipants"
+
             }
 
-
+            // creation of backend instance and send of query with participants and activityType as parameters
             val apiResponse: Response<SuggestionResponse> = getRetrofit()
-                .create(APIService::class.java).getRandom(url)
-            //getImagesOfDogsByBreed("$query/images")
+                .create(APIService::class.java).getSuggestion(url)
 
-            //obtengo el cuerpo de la respuesta
+            // get the answer of the query
             val suggestionResponse: SuggestionResponse? = apiResponse.body()
 
+            // print the received info
             runOnUiThread {
                 if (apiResponse.isSuccessful) {
                     suggestionResponse?.activity?.let {
@@ -147,21 +155,20 @@ class SuggestionScreen : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun getPrice(value: String): String {
         val price = value.toDouble()
-        when {
-            price == 0.0 -> return "Free"
-            (price > 0.0 && price <= 0.3) -> return "Low"
-            (price > 0.3 && price <= 0.6) -> return "Medium"
-            else -> return "High"
+        return when {
+            price == 0.0 -> "Free"
+            (price > 0.0 && price <= 0.3) -> "Low"
+            (price > 0.3 && price <= 0.6) -> "Medium"
+            else -> "High"
         }
     }
 
+    // this method applies formatting to the received text
     private fun String.sentenceCase(): String {
         return this.substring(0, 1).uppercase() + this.substring(1)
     }
-
 }

@@ -2,9 +2,6 @@ package com.example.notbored.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.notbored.R
-import com.example.notbored.databinding.ActivityActivitiesScreenBinding
-import com.example.notbored.databinding.ActivitySuggestionScreenBinding
 import com.example.notbored.databinding.ActivityTermsAndConditionsBinding
 
 class TermsAndConditionsActivity : AppCompatActivity() {

@@ -1,5 +1,6 @@
 package com.example.notbored.ui.service.responseObjects
 
+// this is a container for the data sent from the API
 data class SuggestionResponse(
     var activity: String,
     var type: String,

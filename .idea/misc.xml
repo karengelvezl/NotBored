@@ -3,15 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activities_menu.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_activities_screen.xml" value="0.34427083333333336" />
-        <entry key="app/src/main/res/layout/activity_item.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.1415" />
+        <entry key="app/src/main/res/layout/activity_activities_screen.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/activity_item.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/activity_suggestion_screen.xml" value="0.2716049382716049" />
-        <entry key="app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.30617283950617286" />
-        <entry key="app/src/main/res/layout/divider_activities.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_activities.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_suggestion_screen.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/activity_terms_and_conditions.xml" value="0.19915669759114593" />
         <entry key="app/src/main/res/layout/fragment_home_screen.xml" value="0.30625" />
+        <entry key="app/src/main/res/layout/suggestion_screen.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/terms_and_conditions.xml" value="0.19270833333333334" />
       </map>
     </option>
   </component>
