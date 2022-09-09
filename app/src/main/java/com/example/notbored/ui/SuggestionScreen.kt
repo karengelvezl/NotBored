@@ -41,10 +41,10 @@ class SuggestionScreen : AppCompatActivity() {
                 numberParticipants = intent.getStringExtra("numberParticipants")
             }
         }
-        makeRequest(random, nameActivity!!, numberParticipants.let { it } ?: "0")
+        makeRequest(random, nameActivity?.let { it } ?: "", numberParticipants.let { it } ?: "0")
         with(binding) {
             tryAnotherButton.setOnClickListener {
-                makeRequest(random, nameActivity!!, numberParticipants.let { it } ?: "0")
+                makeRequest(random, nameActivity?.let { it } ?: "", numberParticipants.let { it } ?: "0")
             }
 
             toolbar.setOnClickListener {
