@@ -31,26 +31,17 @@ class SuggestionScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val bundle: Bundle? = intent.extras
-
-        bundle?.let {
-            bundle.apply {
-                //Intent with data
-                random = intent.getBooleanExtra("random", false)
-                nameActivity = intent.getStringExtra("nameActivity")
-                numberParticipants = intent.getStringExtra("numberParticipants")
-            }
-        }
-
+        receiveParameters(bundle)
         makeRequest(random, nameActivity ?: "", numberParticipants)
+        onClick()
+    }
 
+    private fun onClick() {
         with(binding) {
             tryAnotherButton.setOnClickListener {
                 makeRequest(random, nameActivity ?: "", numberParticipants)
             }
-
             toolbar.setOnClickListener {
-                val participants = numberParticipants
-                val numberParticipants = participants.toString()
                 val intent = Intent(applicationContext, ActivitiesScreen::class.java).apply {
                     putExtra("numberParticipants", numberParticipants)
                 }
@@ -59,6 +50,21 @@ class SuggestionScreenActivity : AppCompatActivity() {
         }
     }
 
+    //receive parameters from activityScreen
+    private fun receiveParameters(bundle: Bundle?) {
+        bundle?.let {
+            bundle.apply {
+                random = false
+                nameActivity = null
+                numberParticipants = null
+                random = intent.getBooleanExtra("random", false)
+                nameActivity = intent.getStringExtra("nameActivity")
+                numberParticipants = intent.getStringExtra("numberParticipants")
+            }
+        }
+    }
+
+    //select function according to random is true or false
     private fun makeRequest(random: Boolean, activity: String, participants: String?) {
         when (random) {
             false -> {
@@ -70,23 +76,25 @@ class SuggestionScreenActivity : AppCompatActivity() {
         }
     }
 
+    //Init Retrofit
     private fun getRetrofit(): Retrofit {
-        // creation of retrofit instance
         return Retrofit.Builder()
             .baseUrl("http://www.boredapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
+    var url = "activity"
+    //Get random activity and binding parameters with the view
     private fun findRandomSuggestion(numberOfParticipants: String?) {
         CoroutineScope(Dispatchers.IO).launch {
-
             // creation of the petition
             var url = "activity"
 
             numberParticipants?.let {
                     url = "activity?participants=$numberOfParticipants"
                 }
+
 
             // creation of backend instance and send of query with no parameters
             val apiResponse: Response<SuggestionResponse> = getRetrofit()
@@ -100,8 +108,8 @@ class SuggestionScreenActivity : AppCompatActivity() {
                 if (apiResponse.isSuccessful) {
                     suggestionResponse?.let {
                         binding.suggestionText.text = suggestionResponse.activity
-                        binding.activityType1.text = "Random"
-                        binding.activityType2.text = suggestionResponse.type.sentenceCase()
+                        binding.activityTypeTitle.text = "Random"
+                        binding.activityType.text = suggestionResponse.type.sentenceCase()
                         binding.activityTypeImage.visibility = View.VISIBLE
                         binding.priceRangeText.text = getPrice(suggestionResponse.price)
                         binding.personAmountText.text = suggestionResponse.participants
@@ -111,11 +119,13 @@ class SuggestionScreenActivity : AppCompatActivity() {
         }
     }
 
+    //Get specific activity and binding parameters with the view
     private fun findSuggestion(
         activity: String,
         numberOfParticipants: String?
     ) {
         CoroutineScope(Dispatchers.IO).launch {
+
 
             // creation of the petition
             var url = "activity?type=$activity"
@@ -136,8 +146,8 @@ class SuggestionScreenActivity : AppCompatActivity() {
                 if (apiResponse.isSuccessful) {
                     suggestionResponse?.activity?.let {
                         binding.suggestionText.text = suggestionResponse.activity
-                        binding.activityType1.text = suggestionResponse.type.sentenceCase()
-                        binding.activityType2.text = ""
+                        binding.activityTypeTitle.text = suggestionResponse.type.sentenceCase()
+                        binding.activityType.text = ""
                         binding.activityTypeImage.visibility = View.GONE
                         binding.priceRangeText.text = getPrice(suggestionResponse.price)
                         binding.personAmountText.text = suggestionResponse.participants
@@ -157,12 +167,13 @@ class SuggestionScreenActivity : AppCompatActivity() {
         }
     }
 
+    //Calculate according to the price range
     private fun getPrice(value: String): String {
         val price = value.toDouble()
         return when {
             price == 0.0 -> "Free"
-            (price > 0.0 && price <= 0.3) -> "Low"
-            (price > 0.3 && price <= 0.6) -> "Medium"
+            (price in 0.0..0.3) -> "Low"
+            (price in 0.3 .. 0.6) -> "Medium"
             else -> "High"
         }
     }

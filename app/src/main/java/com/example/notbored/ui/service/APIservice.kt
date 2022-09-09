@@ -8,6 +8,11 @@ interface APIService {
 
     // base call to the API
     @GET()
-    suspend fun getSuggestion(@Url random: String): Response<SuggestionResponse>
+    suspend fun getSuggestion(@Url endOfUrl: String): Response<SuggestionResponse>
 
+    @GET("activity?")
+    suspend fun getActivity(@Query("type") activity: String?, @Query("participants") participants: Int?): Response<SuggestionResponse>
+    
+    @GET("activity?")
+    suspend fun getRandomActivity(@Query("participants") participants: Int): Response<SuggestionResponse>
 }

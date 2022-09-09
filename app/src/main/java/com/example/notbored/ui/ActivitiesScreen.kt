@@ -26,7 +26,7 @@ class ActivitiesScreen : AppCompatActivity() {
         bundle?.let {
             bundle.apply {
                 //Intent with data
-                numberParticipants = getString("numberParticipants").toString()
+                numberParticipants.let { getString("numberParticipants").toString()}
             }
         }
 

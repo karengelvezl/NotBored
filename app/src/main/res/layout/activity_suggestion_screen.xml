@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:id="@+id/activityType1"
+            android:id="@+id/activityTypeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/activityType"
@@ -53,7 +53,7 @@
         app:srcCompat="@drawable/ic_baseline_format_list_bulleted" />
 
     <TextView
-        android:id="@+id/activityType2"
+        android:id="@+id/activityType"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginHorizontal="10dp"
